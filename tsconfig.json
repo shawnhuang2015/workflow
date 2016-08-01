@@ -1,0 +1,27 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"outDir": "lib",
+		"target": "es5",
+		"noLib": true,
+		"removeComments": true,
+		"moduleResolution": "node",
+		"inlineSourceMap": false,
+		// "sourceMap": true,
+		"rootDir": "./src"
+	},
+	"files": [
+		"./node_modules/typescript/lib/lib.es6.d.ts",
+		"./src/plugin.ts",
+		"./src/type-checker.ts",
+		"./src/transpiler.ts",
+		"./src/resolver.ts",
+		"./src/compiler-host.ts",
+		"./src/factory.ts",
+		"./src/format-errors.ts",
+		"./src/logger.ts",
+		"./src/utils.ts",
+		"./src/types.d.ts",
+		"./typings/tsd.d.ts"
+	]
+}
