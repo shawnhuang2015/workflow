@@ -1,0 +1,12 @@
+{
+  "name": "vue",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "vue-cli": "^2.8.2"
+  },
+  "script": {
+    "vue": "vue"
+  }
+}
