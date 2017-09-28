@@ -1,0 +1,85 @@
+<head>
+  <style>
+    div {
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+
+<body>
+</body>
+<script>
+  let displays = {
+    'inline': 'Default value. Displays an element as an inline element (like <span>); respect left & right margins and padding, but not top & bottom; cannot have a width and height set; allow other elements to sit to their left and right.; see very important side notes on this here.',
+    'block': 'Displays an element as a block element (like <p>); respect all of those; force a line break after the block element',
+    'flex': 'Displays an element as a block-level flex container. New in CSS3',
+    'inline-block': 'Displays an element as an inline-level block container. The inside of this block is formatted as block-level box, and the element itself is formatted as an inline-level box; allow other elements to sit to their left and right; respect top & bottom margins and padding; respect height and width',
+    'inline-flex': 'Displays an element as an inline-level flex container. New in CSS3',
+    'inline-table': 'The element is displayed as an inline-level table',
+    'list-item': 'Let the element behave like a <li> element',
+    'run-in': 'Displays an element as either block or inline, depending on context',
+    'table': 'Let the element behave like a <table> element',
+    'table-caption': 'Let the element behave like a <caption> element',
+    'table-column-group': 'Let the element behave like a <colgroup> element',
+    'table-header-group': 'Let the element behave like a <thead> element',
+    'table-footer-group': 'Let the element behave like a <tfoot> element',
+    'table-row-group': 'Let the element behave like a <tbody> element',
+    'table-cell': 'Let the element behave like a <td> element',
+    'table-column': 'Let the element behave like a <col> element',
+    'table-row': 'Let the element behave like a <tr> element',
+    'none': 'The element will not be displayed at all (has no effect on layout)',
+    'initial': 'Sets this property to its default value. Read about initial',
+    'inherit': 'Inherits this property from its parent element. Read about inherit'
+  }
+
+  Object.keys(displays).forEach(display => {
+    let container = document.createElement('div');
+    container.style.width = '500px';
+    container.style.height = '300px';
+    container.style.backgroundColor = '#eee';
+    container.style.overflow = 'scroll';
+
+    let label = document.createElement('div');
+    let str = `${display} : ${displays[display]}`;
+
+    str.split(';').forEach((s, i) => {
+      if (i === 0) {
+        let tmpH3 = document.createElement('h3');
+        tmpH3.innerHTML = encodeHTML(s);
+        label.append(tmpH3);
+      } else {
+        let tmpLi = document.createElement('li');
+        tmpLi.innerHTML = encodeHTML(s);
+        label.append(tmpLi);
+      }
+    })
+
+    // create 12 div;
+    for (var i = 0; i < 12; ++i) {
+      let tmpBox = document.createElement('div');
+
+      tmpBox.style.display = display;
+      tmpBox.style.margin = '10px';
+      tmpBox.style.padding = '5px';
+      tmpBox.style.border = '1px solid #000';
+
+      tmpBox.style.backgroundColor = '#0f0';
+      tmpBox.style.width = '60px';
+      tmpBox.style.height = '60px';
+
+      tmpBox.style.textAlign = 'center';
+      tmpBox.style.verticalAlign = 'middle';
+
+      tmpBox.innerHTML = i + '*'.repeat(10 - i.toString().length);
+
+      container.appendChild(tmpBox);
+    }
+
+    document.querySelector('body').appendChild(container);
+    document.querySelector('body').insertBefore(label, container);
+  })
+
+  function encodeHTML(str) {
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+</script>
