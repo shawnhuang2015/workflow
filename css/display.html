@@ -35,10 +35,11 @@
   Object.keys(displays).forEach(display => {
     let container = document.createElement('div');
     container.style.width = '500px';
-    container.style.height = '300px';
-    container.style.backgroundColor = '#eee';
+    container.style.height = '160px';
+    container.style.backgroundColor = '#777';
     container.style.overflow = 'scroll';
-
+    container.style.display = display;
+    
     let label = document.createElement('div');
     let str = `${display} : ${displays[display]}`;
 
