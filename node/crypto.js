@@ -110,9 +110,34 @@ function hexToBytes(hex) {
   return bytes;
 }
 
-console.log(base64ToBytes('123abc'));
-console.log(bytesToBase64(base64ToBytes('123abc')));
+console.log(base64ToBytes('123ABC'));
+console.log(bytesToBase64(base64ToBytes('123ABC')));
 
 
 console.log(hexToBytes('11111'));
 console.log(bytesToHex(hexToBytes('11111')));
+
+
+let str = 'customized test string.';
+let secret = 'something secret';
+
+function sha1(str){
+  return crypto.createHash('sha1').update(str).digest('hex');
+}
+
+let a = crypto
+.createHmac('sha256', secret)
+.update(str)
+.digest('base64')
+.replace(/\=+$/, '');
+
+let b = crypto
+.createHmac('sha256', secret)
+.update(str)
+.digest('base64')
+.replace(/\=+$/, '');
+
+let sa = sha1(a);
+let sb = sha1(b);
+
+console.log('#', a, b, '#');
