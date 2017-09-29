@@ -65,3 +65,54 @@ let encrypted3 =
 let decrypted3 = decipher3.update(encrypted3, 'hex', 'utf8');
 decrypted3 += decipher3.final('utf8');
 console.log('decrypted3', decrypted3);
+
+var base64map
+= 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+function base64ToBytes (base64) {
+  // Remove non-base-64 characters
+  base64 = base64.replace(/[^A-Z0-9+\/]/ig, '');
+
+  for (var bytes = [], i = 0, imod4 = 0; i < base64.length;
+      imod4 = ++i % 4) {
+    if (imod4 == 0) continue;
+    bytes.push(((base64map.indexOf(base64.charAt(i - 1))
+        & (Math.pow(2, -2 * imod4 + 8) - 1)) << (imod4 * 2))
+        | (base64map.indexOf(base64.charAt(i)) >>> (6 - imod4 * 2)));
+  }
+  return bytes;
+}
+
+function bytesToBase64(bytes) {
+  for (var base64 = [], i = 0; i < bytes.length; i += 3) {
+    var triplet = (bytes[i] << 16) | (bytes[i + 1] << 8) | bytes[i + 2];
+    for (var j = 0; j < 4; j++)
+      if (i * 8 + j * 6 <= bytes.length * 8)
+        base64.push(base64map.charAt((triplet >>> 6 * (3 - j)) & 0x3F));
+      else
+        base64.push('=');
+  }
+  return base64.join('');
+}
+
+// Convert a byte array to a hex string
+function bytesToHex(bytes) {
+  for (var hex = [], i = 0; i < bytes.length; i++) {
+    hex.push((bytes[i] >>> 4).toString(16));
+    hex.push((bytes[i] & 0xF).toString(16));
+  }
+  return hex.join('');
+}
+
+// Convert a hex string to a byte array
+function hexToBytes(hex) {
+  for (var bytes = [], c = 0; c < hex.length; c += 2)
+    bytes.push(parseInt(hex.substr(c, 2), 16));
+  return bytes;
+}
+
+console.log(base64ToBytes('123abc'));
+console.log(bytesToBase64(base64ToBytes('123abc')));
+
+
+console.log(hexToBytes('11111'));
+console.log(bytesToHex(hexToBytes('11111')));
