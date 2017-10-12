@@ -15,7 +15,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { prop: 'bar', prop2: undefined };
+    this.state = { prop: 'bar', prop2: undefined, time: 'initialized time.', count: 2 };
 
     // setTimeout(() => {
     //   this.setState({
@@ -34,8 +34,7 @@ class App extends Component {
 
   UserInfo(props) {
     let value = this.value;
-    value.count++;
-    console.log(value);
+    // console.log(value);
     return (
       <div className="UserInfo">
         <div className="UserInfo-name">
@@ -44,14 +43,65 @@ class App extends Component {
       </div>
     );
   }
+  help = false;
+  componentDidMount() {
+    // setTimeout(
+    //   () => {
+    //     this.tick.call(this);
+    //   },
+    //   2000
+    // );
+    this.help = false;
+
+    this.timerID = setInterval(
+      () => {
+        if (this.help) {
+          console.log('Help');
+          return;
+        } else {
+          console.log('tick');
+          this.tick()
+        }
+      },
+      1000
+    );
+  }
+
+  componentWillUnmount() {
+    this.help = true;
+    // clearInterval(this.timerID);
+  }
+
+  tick() {
+    this.setState((pre, props) => {
+      if (pre.count === 3) {
+        pre.count--;
+      }
+      return {
+        time: new Date().toISOString(),
+        count: ++pre.count
+      }
+    });
+  }
 
 
   _handleClick() {
     console.log('click', this.refs.test);
-    let mountNode = ReactDOM.findDOMNode(this.refs.test);
-    ReactDOM.unmountComponentAtNode(mountNode);
+    this.value.count++;
+    console.log(this.value.count);
+    const mountNode = ReactDOM.findDOMNode(this.refs.test);
+    // window.mountNode = mountNode;
+    console.log(mountNode);
+    // var result = ReactDOM.unmountComponentAtNode(document.getElementById('root2'));
+    // console.log(result);  // true
 
-    this.setState({prop: this.state.prop + '#$%^&*()_'});
+    this.setState((pre, props) => {
+      console.log(pre, props);
+      return {
+        time: new Date().toISOString(),
+        count: ++pre.count
+      }
+    });
   }
 
   render() {
@@ -67,9 +117,23 @@ class App extends Component {
       'Hello, world React element!'
     );
 
+
+    let clocks = [];
+    console.log(this.state.count);
+    for (var j = 0; j < this.state.count; j++) {
+      clocks.push(
+        // <Clock key={j} date={this.value.count}/>
+        <Clock key={j} date={this.state.time} />
+      )
+    }
+
     return (
       <div className="App" onClick={this._handleClick}>
-        <Clock ref='test'/>
+        {this.state.time}
+        {/* <Clock date={this.state.time}/>
+        <Clock ref='test' date={this.state.time}/>
+        <Clock date={this.state.time}/> */}
+        {clocks}
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <img src={logo} className="App-logo" alt="logo" />
@@ -91,8 +155,11 @@ class App extends Component {
 }
 
 class Clock extends Component {
+  // displayName: 'My Clock';
   constructor(props) {
     super(props);
+    this.props = props;
+    console.log(this.props);
     this.state = {
       date: new Date()
     }
@@ -102,7 +169,7 @@ class Clock extends Component {
 
   componentWillMount() {
     console.log('componentWillMount')
-    
+
   }
 
   componentDidMount() {
@@ -127,7 +194,7 @@ class Clock extends Component {
   render() {
     return (
       <div>
-        <h1> Clock : </h1>
+        <h1> Clock : {this.props.date} <img src={logo} className="App-logo" alt="logo" /></h1>
         <h2> It is {this.state.date.toLocaleTimeString()}.</h2>
       </div>
     )
