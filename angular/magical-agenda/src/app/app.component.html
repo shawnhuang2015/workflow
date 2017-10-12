@@ -1,0 +1,14 @@
+<div class='topbar'>
+  <button (click)='onPreMonth()' class='date'>&lt;</button>
+  <button (click)='onNextMonth()' class='date'>&gt;</button>
+  <div class='date'>Auguest 2017</div>
+  <button (click)='onNewEvent()' class='event'>New Event</button>
+</div>
+<div class='agenda-container'>
+  <div *ngFor="let item of this.data; ">
+    {{item.date}}
+    <p *ngFor="let agenda of item.agendas; let i = index">
+      #{{i}} : {{agenda.getTimeRange()}}  | {{agenda.getDetails()}}
+    </p>
+  </div>
+</div>
