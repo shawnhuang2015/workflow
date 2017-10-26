@@ -60,6 +60,7 @@ class App extends Component {
           return;
         } else {
           console.log('tick');
+          console.log(process.env);
           this.tick()
         }
       },

@@ -1,0 +1,14 @@
+{
+  "name": "sequelize",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "pg": "^7.3.0",
+    "sequelize": ">=3.0.0",
+    "sequelize-cli": ">=3.0.0"
+  },
+  "scripts": {
+    "seq": "sequelize"
+  }
+}

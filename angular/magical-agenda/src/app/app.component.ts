@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Agendas } from './app.modle';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,8 @@ export class AppComponent implements OnInit {
   constructor() {
     this.currentMonth = 9;
     this.currentYear = 2017;
+
+    console.log(environment);
   }
 
   ngOnInit() {
